@@ -1,0 +1,184 @@
+.shop-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.shop-header {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.shop-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.shop-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+.skins-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.skin-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.skin-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.skin-selected {
+  border-color: #FFD700;
+  box-shadow: 0 8px 32px rgba(255, 215, 0, 0.4);
+}
+
+.skin-preview-container {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.skin-icon-wrapper {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.equipped-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  border: 2px solid white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.skin-name {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 0.25rem;
+}
+
+.skin-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.skin-price {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  border: 2px solid white;
+}
+
+.price-free {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+}
+
+.coin-icon {
+  font-size: 1.5rem;
+}
+
+.price-amount {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+}
+
+.skin-button {
+  width: 100%;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 1.25rem;
+  border-radius: 50px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.skin-button.purchase {
+  background: linear-gradient(135deg, #4ECDC4, #44A08D);
+  color: white;
+  border: 2px solid white;
+}
+
+.skin-button.purchase:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(78, 205, 196, 0.4);
+}
+
+.skin-button.select {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: 2px solid white;
+}
+
+.skin-button.select:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+}
+
+.skin-button.equipped {
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: white;
+  border: 2px solid white;
+  cursor: default;
+}
+
+.skin-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .shop-title {
+    font-size: 2rem;
+  }
+
+  .skins-grid {
+    grid-template-columns: 1fr;
+  }
+}

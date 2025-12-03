@@ -1,0 +1,149 @@
+.inventory-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+.inventory-header {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.inventory-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.inventory-stats {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stats-badge {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  border: 2px solid white;
+}
+
+.stats-badge.owned {
+  background: linear-gradient(135deg, #4ECDC4, #44A08D);
+  color: white;
+}
+
+.stats-badge.locked {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.inventory-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+
+.inventory-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.inventory-selected {
+  border-color: #FFD700;
+  box-shadow: 0 8px 32px rgba(255, 215, 0, 0.4);
+  transform: scale(1.05);
+}
+
+.inventory-icon-wrapper {
+  width: 100%;
+  height: 150px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.using-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 50px;
+  border: 2px solid white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-size: 0.85rem;
+}
+
+.inventory-skin-name {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #667eea;
+  text-align: center;
+  margin: 0;
+}
+
+.locked-skins-info {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+}
+
+.locked-skins-info p {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: white;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .inventory-title {
+    font-size: 2rem;
+  }
+
+  .inventory-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .inventory-icon-wrapper {
+    height: 120px;
+  }
+
+  .stats-badge {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+}
