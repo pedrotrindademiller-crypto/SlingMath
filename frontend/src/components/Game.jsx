@@ -504,12 +504,14 @@ const Game = ({ playerData, playerId, onUpdate }) => {
           ctx.stroke();
           ctx.restore();
 
-          projectileRef.current = {
-            ...proj,
-            x: newX,
-            y: newY,
-            velocityY: newVelocityY
-          };
+            projectileRef.current = {
+              ...proj,
+              x: newX,
+              y: newY,
+              velocityX: newVelocityX,
+              velocityY: newVelocityY
+            };
+          }
         }
       }
 
