@@ -1,0 +1,31 @@
+# New Skins Configuration for Game.jsx
+# IDs 7-34
+
+7: Pedra + Musgo - gray/green
+8: Raio - yellow/blue electric
+9: Mecânico - bronze/copper
+10: Tesla - blue electric
+11: Neon Cyberpunk - RGB multicolor
+12: Holográfico - pastel purple/pink
+13: Dragão - red/orange/gold
+14: Elfico - brown/green
+15: Sombras - black/purple
+16: Cristal Arcano - purple crystal
+17: Picolé - pink/orange/green
+18: Banana - yellow
+19: Canetinha - multicolor
+20: Inflável - cyan
+21: Tubos de Ensaio - cyan/teal
+22: Impressão 3D - coral/orange
+23: Bioluminescente - bright green/cyan
+24: Atômico - lime green
+25: Ouro Maciço - gold/orange
+26: Fibra de Carbono - dark gray
+27: Titânio - silver/gray
+28: Madeira Petrificada - tan/brown
+29: Ossos - bone white
+30: Abóbora - orange
+31: Bengala Doce - red/white
+32: Neve e Luzes - white/blue
+33: Futurista - cyan/blue
+34: Pirata - brown wood
