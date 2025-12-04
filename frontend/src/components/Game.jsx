@@ -678,6 +678,14 @@ const Game = ({ playerData, playerId, onUpdate }) => {
             ctx.beginPath();
             ctx.arc(particle.x - particle.size * 0.3, particle.y - particle.size * 0.3, particle.size * 0.5, 0, Math.PI * 2);
             ctx.fill();
+          } else if (particle.type === 'hacker') {
+            // Caracteres verdes estilo Matrix
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = particle.color;
+            ctx.font = `bold ${particle.size}px "Courier New", monospace`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(particle.char || '1', particle.x, particle.y);
           } else {
             // Outros efeitos como círculos brilhantes
             ctx.shadowBlur = particle.type === 'gold' ? 10 : 5;
