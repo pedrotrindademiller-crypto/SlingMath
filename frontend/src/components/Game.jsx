@@ -663,8 +663,39 @@ const Game = ({ playerData, playerId, onUpdate }) => {
     const slingshot = slingshotRef.current;
     if (!slingshot.pulling) return;
 
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
     const pos = getEventPosition(e);
-    slingshotRef.current = { ...slingshot, pullX: pos.x, pullY: pos.y };
+    
+    // Definir limites para puxar o estilingue
+    const maxPullDistance = 120; // Distância máxima de puxar
+    const minY = slingshot.y - 80; // Não deixar puxar muito para cima (80px acima do estilingue)
+    const maxY = canvas.height - 20; // Não deixar puxar para fora da tela (20px de margem)
+    const minX = 20; // Margem esquerda
+    const maxX = canvas.width - 20; // Margem direita
+    
+    // Calcular distância do puxão
+    let pullX = pos.x;
+    let pullY = pos.y;
+    
+    // Aplicar limites de bordas
+    pullX = Math.max(minX, Math.min(maxX, pullX));
+    pullY = Math.max(minY, Math.min(maxY, pullY));
+    
+    // Calcular distância do centro do estilingue
+    const dx = pullX - slingshot.x;
+    const dy = pullY - slingshot.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    
+    // Se ultrapassar a distância máxima, limitar ao raio máximo
+    if (distance > maxPullDistance) {
+      const angle = Math.atan2(dy, dx);
+      pullX = slingshot.x + Math.cos(angle) * maxPullDistance;
+      pullY = slingshot.y + Math.sin(angle) * maxPullDistance;
+    }
+    
+    slingshotRef.current = { ...slingshot, pullX, pullY };
   };
 
   const handleMouseUp = (e) => {
