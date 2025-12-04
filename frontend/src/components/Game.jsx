@@ -555,8 +555,9 @@ const Game = ({ playerData, playerId, onUpdate }) => {
         ctx.moveTo(slingshot.x - 30, slingshot.y - 40);
         ctx.lineTo(slingshot.x + 30, slingshot.y - 40);
         ctx.stroke();
+        }
+        ctx.restore();
       }
-      ctx.restore();
 
       animationFrameRef.current = requestAnimationFrame(gameLoop);
     };
