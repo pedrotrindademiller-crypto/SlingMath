@@ -252,15 +252,16 @@ const Game = ({ playerData, playerId, onUpdate }) => {
       // Definir limites para puxar o estilingue
       const maxPullDistance = 150;
       const minY = slingshot.y; // Não deixar puxar PARA CIMA do estilingue
-      const minX = -200;
-      const maxX = canvas.width + 200;
+      const maxY = canvas.height - 20; // NÃO deixar puxar para fora embaixo (20px de margem)
+      const minX = 20; // Margem esquerda
+      const maxX = canvas.width - 20; // Margem direita
       
       let pullX = pos.x;
       let pullY = pos.y;
       
-      // Aplicar limites: Só pode puxar para baixo
-      pullY = Math.max(minY, pullY);
-      pullX = Math.max(minX, Math.min(maxX, pullX));
+      // Aplicar limites: Só pode puxar para baixo mas NÃO além da tela
+      pullY = Math.max(minY, Math.min(maxY, pullY)); // Entre o estilingue e o fim da tela
+      pullX = Math.max(minX, Math.min(maxX, pullX)); // Dentro dos limites laterais
       
       // Calcular distância do centro do estilingue
       const dx = pullX - slingshot.x;
@@ -272,7 +273,10 @@ const Game = ({ playerData, playerId, onUpdate }) => {
         const angle = Math.atan2(dy, dx);
         pullX = slingshot.x + Math.cos(angle) * maxPullDistance;
         pullY = slingshot.y + Math.sin(angle) * maxPullDistance;
-        pullY = Math.max(minY, pullY);
+        
+        // Garantir que está dentro dos limites após aplicar distância máxima
+        pullY = Math.max(minY, Math.min(maxY, pullY));
+        pullX = Math.max(minX, Math.min(maxX, pullX));
       }
       
       slingshotRef.current = { ...slingshot, pullX, pullY };
