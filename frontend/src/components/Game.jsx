@@ -227,6 +227,44 @@ const Game = ({ playerData, playerId, onUpdate }) => {
     };
   }, []);
 
+  // Add global mouse/touch up listeners to handle release outside canvas
+  useEffect(() => {
+    const handleGlobalMouseUp = (e) => {
+      if (!gameActive) return;
+      const slingshot = slingshotRef.current;
+      if (!slingshot.pulling) return;
+
+      const dx = slingshot.x - slingshot.pullX;
+      const dy = slingshot.y - slingshot.pullY;
+
+      // Aumentar a força do tiro
+      const powerMultiplier = 5;
+
+      projectileRef.current = {
+        x: slingshot.pullX,
+        y: slingshot.pullY,
+        radius: 10,
+        velocityX: dx / powerMultiplier,
+        velocityY: dy / powerMultiplier
+      };
+
+      slingshotRef.current = { ...slingshot, pulling: false, pullX: 0, pullY: 0 };
+    };
+
+    const handleGlobalTouchEnd = (e) => {
+      handleGlobalMouseUp(e);
+    };
+
+    // Add listeners to document to catch events outside canvas
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    document.addEventListener('touchend', handleGlobalTouchEnd);
+
+    return () => {
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+      document.removeEventListener('touchend', handleGlobalTouchEnd);
+    };
+  }, [gameActive]);
+
   // Game loop
   useEffect(() => {
     const canvas = canvasRef.current;
