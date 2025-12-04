@@ -947,6 +947,108 @@ const Game = ({ playerData, playerId, onUpdate }) => {
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillText(particle.char || '1', particle.x, particle.y);
+          } else if (particle.type === 'leaf') {
+            // Folhas girando
+            ctx.save();
+            ctx.translate(particle.x, particle.y);
+            if (particle.rotation) ctx.rotate(particle.rotation);
+            ctx.beginPath();
+            ctx.ellipse(0, 0, particle.size, particle.size * 1.5, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          } else if (particle.type === 'spark') {
+            // Faíscas elétricas com rastro
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = particle.color;
+            ctx.beginPath();
+            ctx.moveTo(particle.x - particle.size, particle.y);
+            ctx.lineTo(particle.x + particle.size, particle.y);
+            ctx.strokeStyle = particle.color;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          } else if (particle.type === 'gear') {
+            // Engrenagens girando
+            ctx.save();
+            ctx.translate(particle.x, particle.y);
+            if (particle.rotation) ctx.rotate(particle.rotation);
+            ctx.strokeStyle = particle.color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+              const angle = (Math.PI * 2 * i) / 6;
+              ctx.moveTo(0, 0);
+              ctx.lineTo(Math.cos(angle) * particle.size, Math.sin(angle) * particle.size);
+            }
+            ctx.stroke();
+            ctx.restore();
+          } else if (particle.type === 'neon') {
+            // Neon brilhante
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = particle.color;
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (particle.type === 'hologram') {
+            // Hologramas semi-transparentes
+            ctx.globalAlpha = 0.7 * particle.life;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = particle.color;
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+          } else if (particle.type === 'smoke') {
+            // Fumaça púrpura
+            ctx.globalAlpha = 0.5 * particle.life;
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+          } else if (particle.type === 'crystal') {
+            // Cristais
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = particle.color;
+            ctx.save();
+            ctx.translate(particle.x, particle.y);
+            ctx.beginPath();
+            for (let i = 0; i < 4; i++) {
+              const angle = (Math.PI * 2 * i) / 4;
+              const x = Math.cos(angle) * particle.size;
+              const y = Math.sin(angle) * particle.size;
+              if (i === 0) ctx.moveTo(x, y);
+              else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+          } else if (particle.type === 'bubble') {
+            // Bolhas
+            ctx.globalAlpha = 0.8 * particle.life;
+            ctx.strokeStyle = particle.color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          } else if (particle.type === 'glow') {
+            // Bioluminescência
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = particle.color;
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx.fill();
+          } else if (particle.type === 'atom') {
+            // Partículas atômicas com órbita
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = particle.color;
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size * 0.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = particle.color;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx.stroke();
           } else {
             // Outros efeitos como círculos brilhantes
             ctx.shadowBlur = particle.type === 'gold' ? 10 : 5;
