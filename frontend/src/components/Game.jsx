@@ -229,8 +229,6 @@ const Game = ({ playerData, playerId, onUpdate }) => {
 
   // Game loop
   useEffect(() => {
-    if (!gameActive) return;
-
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -251,12 +249,13 @@ const Game = ({ playerData, playerId, onUpdate }) => {
       // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Update and draw targets
-      targetsRef.current = targetsRef.current.map(target => {
-        // NÃO desenha alvos que foram acertados (explodidos)
-        if (target.hit) {
-          return target; // Mantém no array mas não desenha
-        }
+      // Update and draw targets (somente se o jogo estiver ativo)
+      if (gameActive) {
+        targetsRef.current = targetsRef.current.map(target => {
+          // NÃO desenha alvos que foram acertados (explodidos)
+          if (target.hit) {
+            return target; // Mantém no array mas não desenha
+          }
 
         // Update position
         let newX = target.x + target.velocityX;
