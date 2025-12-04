@@ -69,8 +69,8 @@ function App() {
   };
 
   const handleAdminAddCoins = async () => {
-    // Código secreto: SLINGMATH2025
-    if (adminCode !== 'SLINGMATH2025') {
+    // Código secreto: PEPEMILLER2013
+    if (adminCode !== 'PEPEMILLER2013') {
       toast.error('Código de administrador inválido!');
       return;
     }
