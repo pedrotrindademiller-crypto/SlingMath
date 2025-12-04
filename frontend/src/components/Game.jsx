@@ -651,6 +651,58 @@ const Game = ({ playerData, playerId, onUpdate }) => {
       // Band (elástico)
       ctx.strokeStyle = colors.band;
       if (slingshot.pulling) {
+        // Desenhar linha de previsão para Skin Espelho
+        const projSkinConfig = SKINS[playerData?.selectedSkin || 0];
+        if (projSkinConfig?.ricochet) {
+          ctx.save();
+          ctx.strokeStyle = 'rgba(192, 192, 192, 0.5)';
+          ctx.lineWidth = 2;
+          ctx.setLineDash([5, 5]);
+          
+          // Calcular trajetória
+          const dx = (slingshot.x - slingshot.pullX) / 5;
+          const dy = (slingshot.y - slingshot.pullY) / 5;
+          
+          let predX = slingshot.pullX;
+          let predY = slingshot.pullY;
+          let predVX = dx;
+          let predVY = dy;
+          let hasRicocheted = false;
+          
+          ctx.beginPath();
+          ctx.moveTo(predX, predY);
+          
+          // Simular trajetória
+          for (let i = 0; i < 100; i++) {
+            predX += predVX;
+            predY += predVY;
+            predVY += 0.3; // Gravidade
+            
+            // Ricochet nas paredes
+            if (!hasRicocheted && (predX < 10 || predX > canvas.width - 10)) {
+              predVX = -predVX;
+              hasRicocheted = true;
+              
+              // Marcar ponto de ricochete
+              ctx.lineTo(predX, predY);
+              ctx.stroke();
+              
+              // Nova linha após ricochete
+              ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+              ctx.beginPath();
+              ctx.moveTo(predX, predY);
+            }
+            
+            ctx.lineTo(predX, predY);
+            
+            // Parar se sair da tela
+            if (predY > canvas.height || predX < 0 || predX > canvas.width) break;
+          }
+          
+          ctx.stroke();
+          ctx.restore();
+        }
+        
         ctx.lineWidth = 4;
         ctx.beginPath();
         ctx.moveTo(slingshot.x - 30, slingshot.y - 40);
@@ -661,7 +713,6 @@ const Game = ({ playerData, playerId, onUpdate }) => {
         // Projectile on sling (com cor da skin)
         ctx.beginPath();
         ctx.arc(slingshot.pullX, slingshot.pullY, 10, 0, Math.PI * 2);
-        const projSkinConfig = SKINS[playerData?.selectedSkin || 0];
         
         if (projSkinConfig?.effect === 'rainbow') {
           const grad = ctx.createRadialGradient(slingshot.pullX, slingshot.pullY, 0, slingshot.pullX, slingshot.pullY, 10);
@@ -669,6 +720,12 @@ const Game = ({ playerData, playerId, onUpdate }) => {
           colors.forEach((color, i) => {
             grad.addColorStop(i / colors.length, color);
           });
+          ctx.fillStyle = grad;
+        } else if (projSkinConfig?.effect === 'mirror') {
+          const grad = ctx.createRadialGradient(slingshot.pullX, slingshot.pullY, 0, slingshot.pullX, slingshot.pullY, 10);
+          grad.addColorStop(0, '#FFFFFF');
+          grad.addColorStop(0.5, '#E0E0E0');
+          grad.addColorStop(1, '#C0C0C0');
           ctx.fillStyle = grad;
         } else {
           ctx.fillStyle = projSkinConfig.color || '#8B4513';
