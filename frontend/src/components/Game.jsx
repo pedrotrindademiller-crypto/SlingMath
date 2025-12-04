@@ -315,10 +315,11 @@ const Game = ({ playerData, playerId, onUpdate }) => {
         ctx.restore();
 
         return { ...target, x: newX, y: newY };
-      });
+        });
+      }
 
-      // Update and draw projectile
-      if (projectileRef.current) {
+      // Update and draw projectile (somente se o jogo estiver ativo)
+      if (gameActive && projectileRef.current) {
         const proj = projectileRef.current;
         const newX = proj.x + proj.velocityX;
         const newY = proj.y + proj.velocityY;
