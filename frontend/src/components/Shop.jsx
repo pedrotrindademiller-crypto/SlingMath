@@ -67,8 +67,9 @@ const Shop = ({ playerData, playerId, onUpdate }) => {
               <CardHeader>
                 <div className="skin-preview-container">
                   <div className="skin-icon-wrapper" style={{
-                    background: skin.gradient || skin.color,
-                    border: owned ? '3px solid #4ECDC4' : '3px solid rgba(255, 255, 255, 0.3)'
+                    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 250, 0.95))',
+                    border: owned ? '3px solid #4ECDC4' : '3px solid rgba(102, 126, 234, 0.3)',
+                    boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.05)'
                   }}>
                     <SkinIcon skinId={skin.id} size={120} />
                     {owned && (
