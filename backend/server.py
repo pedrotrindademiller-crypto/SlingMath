@@ -141,10 +141,83 @@ def generate_question(level: int) -> Question:
     )
 
 
+# Helper functions
+def hash_password(password: str) -> str:
+    """Hash a password using bcrypt"""
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+def verify_password(password: str, hashed: str) -> bool:
+    """Verify a password against a hash"""
+    return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
+
 # Routes
 @api_router.get("/")
 async def root():
     return {"message": "SlingMath API"}
+
+@api_router.post("/signup")
+async def signup(request: SignupRequest):
+    """Register a new player with email and password"""
+    # Check if email already exists
+    existing = await db.players.find_one({"email": request.email})
+    if existing:
+        raise HTTPException(status_code=400, detail="Email já cadastrado")
+    
+    # Create new player
+    player_id = f"player_{uuid.uuid4().hex[:12]}"
+    hashed_password = hash_password(request.password)
+    
+    player = Player(
+        playerId=player_id,
+        email=request.email,
+        password=hashed_password
+    )
+    
+    doc = player.model_dump()
+    doc['createdAt'] = doc['createdAt'].isoformat()
+    doc['updatedAt'] = doc['updatedAt'].isoformat()
+    
+    await db.players.insert_one(doc)
+    
+    # Return player without password
+    player_dict = player.model_dump()
+    player_dict.pop('password', None)
+    
+    return {
+        "success": True,
+        "playerId": player_id,
+        "email": request.email,
+        "player": player_dict
+    }
+
+@api_router.post("/login")
+async def login(request: LoginRequest):
+    """Login with email and password"""
+    # Find player by email
+    player = await db.players.find_one({"email": request.email}, {"_id": 0})
+    
+    if not player:
+        raise HTTPException(status_code=401, detail="Email ou senha incorretos")
+    
+    # Verify password
+    if not player.get('password') or not verify_password(request.password, player['password']):
+        raise HTTPException(status_code=401, detail="Email ou senha incorretos")
+    
+    # Convert ISO strings back to datetime
+    if isinstance(player.get('createdAt'), str):
+        player['createdAt'] = datetime.fromisoformat(player['createdAt'])
+    if isinstance(player.get('updatedAt'), str):
+        player['updatedAt'] = datetime.fromisoformat(player['updatedAt'])
+    
+    # Remove password from response
+    player.pop('password', None)
+    
+    return {
+        "success": True,
+        "playerId": player['playerId'],
+        "email": player['email'],
+        "player": Player(**player)
+    }
 
 @api_router.post("/player", response_model=Player)
 async def create_or_get_player(input: PlayerCreate):
