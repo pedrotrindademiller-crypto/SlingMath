@@ -16,7 +16,8 @@ const SKINS = [
   { id: 2, name: 'Gelo', color: '#00CED1' },
   { id: 3, name: 'Ouro', color: '#FFD700' },
   { id: 4, name: 'Arco-íris', gradient: 'linear-gradient(135deg, #FF6B6B, #4ECDC4, #45B7D1, #FFA07A)' },
-  { id: 5, name: 'Espelho', gradient: 'linear-gradient(135deg, #E0E0E0, #FFFFFF, #C0C0C0, #F0F0F0)' }
+  { id: 5, name: 'Espelho', gradient: 'linear-gradient(135deg, #E0E0E0, #FFFFFF, #C0C0C0, #F0F0F0)' },
+  { id: 6, name: 'Hacker', gradient: 'linear-gradient(135deg, #00FF00, #00AA00, #003300, #00FF00)' }
 ];
 
 const Inventory = ({ playerData, playerId, onUpdate }) => {
