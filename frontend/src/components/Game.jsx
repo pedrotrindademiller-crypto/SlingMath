@@ -327,6 +327,31 @@ const Game = ({ playerData, playerId, onUpdate }) => {
       const slingshot = slingshotRef.current;
       if (!slingshot.pulling) return;
 
+      const skinConfig = SKINS[playerData?.selectedSkin || 0];
+      
+      // Skin Hacker: Destrói TODOS os alvos instantaneamente
+      if (skinConfig?.instantKill) {
+        // Marcar todos os alvos como atingidos
+        targetsRef.current = targetsRef.current.map(target => {
+          if (!target.hit) {
+            // Criar explosão verde em cada alvo
+            const hackExplosion = createHackerExplosion(target.x, target.y);
+            particlesRef.current = [...particlesRef.current, ...hackExplosion];
+          }
+          return { ...target, hit: true };
+        });
+        
+        // Pegar o primeiro alvo para a questão
+        const firstTarget = targetsRef.current[0];
+        if (firstTarget) {
+          lastHitPositionRef.current = { x: firstTarget.x, y: firstTarget.y };
+        }
+        
+        slingshotRef.current = { ...slingshot, pulling: false, pullX: 0, pullY: 0 };
+        handleTargetHit();
+        return;
+      }
+
       const dx = slingshot.x - slingshot.pullX;
       const dy = slingshot.y - slingshot.pullY;
 
