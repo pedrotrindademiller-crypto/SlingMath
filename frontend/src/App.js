@@ -283,6 +283,57 @@ function App() {
           </div>
         </div>
       )}
+
+      {/* Login Modal */}
+      {showLoginModal && (
+        <div className="login-overlay">
+          <div className="login-modal">
+            <div className="login-header">
+              <h1 className="login-title">🎯 SlingMath</h1>
+              <p className="login-subtitle">Bem-vindo ao jogo de matemática!</p>
+            </div>
+
+            <div className="login-content">
+              <p className="login-description">
+                Para começar a jogar, precisamos do seu email para salvar seu progresso.
+              </p>
+
+              <div className="login-form">
+                <div className="login-input-group">
+                  <label>Email:</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setLoginError('');
+                    }}
+                    placeholder="seu@email.com"
+                    className="login-input"
+                    onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+                    autoFocus
+                  />
+                  {loginError && (
+                    <p className="login-error">{loginError}</p>
+                  )}
+                </div>
+
+                <Button 
+                  onClick={handleLogin}
+                  className="login-button"
+                  disabled={!email}
+                >
+                  Começar a Jogar
+                </Button>
+
+                <p className="login-privacy">
+                  🔒 Seu email é usado apenas para salvar seu progresso e não será compartilhado.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
