@@ -21,7 +21,9 @@ function App() {
   const [coinsToAdd, setCoinsToAdd] = useState(100);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [isSignup, setIsSignup] = useState(true); // true = signup, false = login
 
   useEffect(() => {
     initializePlayer();
