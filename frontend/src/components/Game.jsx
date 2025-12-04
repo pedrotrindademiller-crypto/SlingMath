@@ -226,6 +226,19 @@ const Game = ({ playerData, playerId, onUpdate }) => {
           type: 'mirror'
         };
       
+      case 'hacker': // Partículas de código verde Matrix
+        const numbers = ['0', '1'];
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 0.5,
+          velocityY: 1 + Math.random() * 2, // Caindo como Matrix
+          size: 8 + Math.random() * 4,
+          color: ['#00FF00', '#00AA00', '#00FF41'][Math.floor(Math.random() * 3)],
+          decay: 0.015 + Math.random() * 0.01,
+          type: 'hacker',
+          char: numbers[Math.floor(Math.random() * numbers.length)]
+        };
+      
       default:
         return null;
     }
