@@ -170,6 +170,65 @@ function App() {
           />
         )}
       </main>
+
+      {/* Admin Panel */}
+      {showAdminPanel && (
+        <div className="admin-overlay" onClick={() => setShowAdminPanel(false)}>
+          <div className="admin-panel" onClick={(e) => e.stopPropagation()}>
+            <h2 className="admin-title">🔧 Painel de Administrador</h2>
+            <p className="admin-subtitle">Adicionar moedas para testes</p>
+            
+            <div className="admin-form">
+              <div className="admin-input-group">
+                <label>Código de Admin:</label>
+                <input
+                  type="password"
+                  value={adminCode}
+                  onChange={(e) => setAdminCode(e.target.value)}
+                  placeholder="Digite o código secreto"
+                  className="admin-input"
+                  onKeyPress={(e) => e.key === 'Enter' && handleAdminAddCoins()}
+                />
+              </div>
+
+              <div className="admin-input-group">
+                <label>Quantidade de Moedas:</label>
+                <input
+                  type="number"
+                  value={coinsToAdd}
+                  onChange={(e) => setCoinsToAdd(parseInt(e.target.value) || 0)}
+                  className="admin-input"
+                  min="1"
+                  max="10000"
+                />
+              </div>
+
+              <div className="admin-info">
+                <p>Moedas atuais: <strong>{playerData?.coins || 0} 🪙</strong></p>
+                <p>Após adicionar: <strong>{(playerData?.coins || 0) + coinsToAdd} 🪙</strong></p>
+              </div>
+
+              <div className="admin-buttons">
+                <Button 
+                  onClick={handleAdminAddCoins}
+                  className="admin-button-confirm"
+                >
+                  Adicionar Moedas
+                </Button>
+                <Button 
+                  onClick={() => setShowAdminPanel(false)}
+                  variant="outline"
+                  className="admin-button-cancel"
+                >
+                  Cancelar
+                </Button>
+              </div>
+            </div>
+
+            <p className="admin-hint">💡 Atalho: Ctrl + Shift + A</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
