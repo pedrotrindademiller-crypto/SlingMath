@@ -52,7 +52,35 @@ const SKINS = {
     slingshotColors: { base: '#003300', arms: '#00AA00', band: '#00FF00' },
     effect: 'hacker',
     instantKill: true
-  }
+  },
+  7: { name: 'Pedra + Musgo', color: '#696969', slingshotColors: { base: '#696969', arms: '#556B2F', band: '#8FBC8F' }, effect: 'nature' },
+  8: { name: 'Raio', color: '#FFD700', slingshotColors: { base: '#FFD700', arms: '#FFFF00', band: '#4169E1' }, effect: 'electric' },
+  9: { name: 'Mecânico', color: '#B87333', slingshotColors: { base: '#B87333', arms: '#8B7355', band: '#CD7F32' }, effect: 'mechanical' },
+  10: { name: 'Tesla', color: '#1E90FF', slingshotColors: { base: '#1E90FF', arms: '#00BFFF', band: '#87CEEB' }, effect: 'electric' },
+  11: { name: 'Neon Cyberpunk', color: '#FF00FF', slingshotColors: { base: '#FF00FF', arms: '#00FFFF', band: '#FF1493' }, effect: 'neon' },
+  12: { name: 'Holográfico', color: '#E0BBE4', slingshotColors: { base: '#E0BBE4', arms: '#957DAD', band: '#D291BC' }, effect: 'hologram' },
+  13: { name: 'Dragão', color: '#8B0000', slingshotColors: { base: '#8B0000', arms: '#FF4500', band: '#FFD700' }, effect: 'fire' },
+  14: { name: 'Elfico', color: '#8B4513', slingshotColors: { base: '#8B4513', arms: '#2E8B57', band: '#3CB371' }, effect: 'nature' },
+  15: { name: 'Sombras', color: '#1A1A1A', slingshotColors: { base: '#1A1A1A', arms: '#4B0082', band: '#8B008B' }, effect: 'shadow' },
+  16: { name: 'Cristal Arcano', color: '#9370DB', slingshotColors: { base: '#9370DB', arms: '#BA55D3', band: '#DA70D6' }, effect: 'crystal' },
+  17: { name: 'Picolé', color: '#FF6B9D', slingshotColors: { base: '#FF6B9D', arms: '#FEC368', band: '#96E6A1' }, effect: 'fun' },
+  18: { name: 'Banana', color: '#FFE135', slingshotColors: { base: '#FFE135', arms: '#FFEB3B', band: '#FDD835' }, effect: 'fun' },
+  19: { name: 'Canetinha', color: '#FF0000', slingshotColors: { base: '#FF0000', arms: '#00FF00', band: '#0000FF' }, effect: 'rainbow' },
+  20: { name: 'Inflável', color: '#00CED1', slingshotColors: { base: '#00CED1', arms: '#48D1CC', band: '#40E0D0' }, effect: 'water' },
+  21: { name: 'Tubos de Ensaio', color: '#00CED1', slingshotColors: { base: '#00CED1', arms: '#20B2AA', band: '#5F9EA0' }, effect: 'science' },
+  22: { name: 'Impressão 3D', color: '#FF6347', slingshotColors: { base: '#FF6347', arms: '#FF7F50', band: '#FFA07A' }, effect: 'tech' },
+  23: { name: 'Bioluminescente', color: '#00FF7F', slingshotColors: { base: '#00FF7F', arms: '#7FFFD4', band: '#AFEEEE' }, effect: 'glow' },
+  24: { name: 'Atômico', color: '#00FA9A', slingshotColors: { base: '#00FA9A', arms: '#00FF7F', band: '#7CFC00' }, effect: 'atomic' },
+  25: { name: 'Ouro Maciço', color: '#FFD700', slingshotColors: { base: '#FFD700', arms: '#FFA500', band: '#FF8C00' }, effect: 'gold' },
+  26: { name: 'Fibra de Carbono', color: '#2F4F4F', slingshotColors: { base: '#2F4F4F', arms: '#696969', band: '#808080' }, effect: 'carbon' },
+  27: { name: 'Titânio', color: '#C0C0C0', slingshotColors: { base: '#C0C0C0', arms: '#A9A9A9', band: '#D3D3D3' }, effect: 'metal' },
+  28: { name: 'Madeira Petrificada', color: '#8B7355', slingshotColors: { base: '#8B7355', arms: '#A0826D', band: '#BC8F8F' }, effect: 'stone' },
+  29: { name: 'Ossos', color: '#F5F5DC', slingshotColors: { base: '#F5F5DC', arms: '#FFFAF0', band: '#FFE4B5' }, effect: 'bone' },
+  30: { name: 'Abóbora', color: '#FF8C00', slingshotColors: { base: '#FF8C00', arms: '#FFA500', band: '#FF7F50' }, effect: 'pumpkin' },
+  31: { name: 'Bengala Doce', color: '#FF0000', slingshotColors: { base: '#FF0000', arms: '#FFFFFF', band: '#FF0000' }, effect: 'candy' },
+  32: { name: 'Neve e Luzes', color: '#FFFFFF', slingshotColors: { base: '#FFFFFF', arms: '#87CEEB', band: '#1E90FF' }, effect: 'ice' },
+  33: { name: 'Futurista', color: '#00FFFF', slingshotColors: { base: '#00FFFF', arms: '#0080FF', band: '#0040FF' }, effect: 'future' },
+  34: { name: 'Pirata', color: '#8B4513', slingshotColors: { base: '#8B4513', arms: '#A0522D', band: '#D2691E' }, effect: 'wood' }
 };
 
 const Game = ({ playerData, playerId, onUpdate }) => {
