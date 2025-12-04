@@ -194,6 +194,73 @@ async def signup(request: SignupRequest):
         "player": player_dict
     }
 
+@api_router.post("/check-email")
+async def check_email(request: dict):
+    """Check if email exists and if it needs password setup"""
+    email = request.get('email')
+    if not email:
+        raise HTTPException(status_code=400, detail="Email is required")
+    
+    player = await db.players.find_one({"email": email}, {"_id": 0, "playerId": 1, "email": 1, "password": 1})
+    
+    if not player:
+        return {
+            "exists": False,
+            "needsPassword": False
+        }
+    
+    # Check if password is set
+    has_password = bool(player.get('password'))
+    
+    return {
+        "exists": True,
+        "needsPassword": not has_password,
+        "playerId": player.get('playerId') if not has_password else None
+    }
+
+@api_router.post("/set-password")
+async def set_password(request: SetPasswordRequest):
+    """Set password for existing account without password"""
+    # Find player by email
+    player = await db.players.find_one({"email": request.email}, {"_id": 0})
+    
+    if not player:
+        raise HTTPException(status_code=404, detail="Email não encontrado")
+    
+    # Check if already has password
+    if player.get('password'):
+        raise HTTPException(status_code=400, detail="Esta conta já tem senha. Use o login normal.")
+    
+    # Hash and set password
+    hashed_password = hash_password(request.password)
+    
+    await db.players.update_one(
+        {"email": request.email},
+        {"$set": {
+            "password": hashed_password,
+            "updatedAt": datetime.now(timezone.utc).isoformat()
+        }}
+    )
+    
+    # Get updated player
+    player = await db.players.find_one({"email": request.email}, {"_id": 0})
+    
+    # Convert ISO strings back to datetime
+    if isinstance(player.get('createdAt'), str):
+        player['createdAt'] = datetime.fromisoformat(player['createdAt'])
+    if isinstance(player.get('updatedAt'), str):
+        player['updatedAt'] = datetime.fromisoformat(player['updatedAt'])
+    
+    # Remove password from response
+    player.pop('password', None)
+    
+    return {
+        "success": True,
+        "playerId": player['playerId'],
+        "email": player['email'],
+        "player": Player(**player)
+    }
+
 @api_router.post("/login")
 async def login(request: LoginRequest):
     """Login with email and password"""
@@ -203,8 +270,12 @@ async def login(request: LoginRequest):
     if not player:
         raise HTTPException(status_code=401, detail="Email ou senha incorretos")
     
+    # Check if password is not set yet
+    if not player.get('password'):
+        raise HTTPException(status_code=400, detail="Esta conta precisa definir uma senha primeiro")
+    
     # Verify password
-    if not player.get('password') or not verify_password(request.password, player['password']):
+    if not verify_password(request.password, player['password']):
         raise HTTPException(status_code=401, detail="Email ou senha incorretos")
     
     # Convert ISO strings back to datetime
