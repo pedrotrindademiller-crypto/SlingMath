@@ -42,22 +42,73 @@ function App() {
 
   const initializePlayer = async () => {
     try {
+      // Check if user has email saved
+      const savedEmail = localStorage.getItem('slingmath_email');
+      const savedPlayerId = localStorage.getItem('slingmath_player_id');
+
+      if (!savedEmail) {
+        // Show login modal if no email
+        setLoading(false);
+        setShowLoginModal(true);
+        return;
+      }
+
       // Get or create player ID
-      let id = localStorage.getItem('slingmath_player_id');
+      let id = savedPlayerId;
       if (!id) {
         id = `player_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         localStorage.setItem('slingmath_player_id', id);
       }
       setPlayerId(id);
 
-      // Get or create player data
-      const response = await axios.post(`${API}/player`, { playerId: id });
+      // Get or create player data with email
+      const response = await axios.post(`${API}/player`, { 
+        playerId: id,
+        email: savedEmail 
+      });
       setPlayerData(response.data);
       setLoading(false);
     } catch (error) {
       console.error('Error initializing player:', error);
       toast.error('Erro ao carregar dados do jogador');
       setLoading(false);
+    }
+  };
+
+  const handleLogin = async () => {
+    setLoginError('');
+    
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      setLoginError('Por favor, insira um email válido');
+      return;
+    }
+
+    try {
+      // Generate or get player ID
+      let id = localStorage.getItem('slingmath_player_id');
+      if (!id) {
+        id = `player_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        localStorage.setItem('slingmath_player_id', id);
+      }
+
+      // Save email
+      localStorage.setItem('slingmath_email', email);
+      setPlayerId(id);
+
+      // Create/get player with email
+      const response = await axios.post(`${API}/player`, { 
+        playerId: id,
+        email: email 
+      });
+      
+      setPlayerData(response.data);
+      setShowLoginModal(false);
+      toast.success(`Bem-vindo, ${email}! 🎮`);
+    } catch (error) {
+      console.error('Error logging in:', error);
+      setLoginError('Erro ao fazer login. Tente novamente.');
     }
   };
 
