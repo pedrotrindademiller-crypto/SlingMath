@@ -83,6 +83,25 @@ const Inventory = ({ playerData, playerId, onUpdate }) => {
               <CardContent>
                 <CardTitle className="inventory-skin-name">{skin.name}</CardTitle>
               </CardContent>
+              <CardFooter>
+                {isSelected ? (
+                  <Button 
+                    className="equip-button equipped"
+                    disabled
+                    data-testid={`equipped-button-${skin.id}`}
+                  >
+                    ✓ Equipada
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => handleEquipSkin(skin.id)}
+                    className="equip-button"
+                    data-testid={`equip-button-${skin.id}`}
+                  >
+                    Equipar
+                  </Button>
+                )}
+              </CardFooter>
             </Card>
           );
         })}
