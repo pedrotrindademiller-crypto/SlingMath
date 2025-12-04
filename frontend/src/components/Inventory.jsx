@@ -69,8 +69,9 @@ const Inventory = ({ playerData, playerId, onUpdate }) => {
             >
               <CardHeader>
                 <div className="inventory-icon-wrapper" style={{
-                  background: skin.gradient || skin.color,
-                  border: isSelected ? '3px solid #FFD700' : '2px solid rgba(255, 255, 255, 0.3)'
+                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 250, 0.95))',
+                  border: isSelected ? '3px solid #FFD700' : '2px solid rgba(102, 126, 234, 0.3)',
+                  boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.05)'
                 }}>
                   <SkinIcon skinId={skin.id} size={100} />
                   {isSelected && (
