@@ -36,6 +36,14 @@ const SKINS = {
     gradient: 'linear-gradient(135deg, #FF6B6B, #4ECDC4, #45B7D1, #FFA07A, #98D8C8)',
     slingshotColors: { base: '#FF1493', arms: '#00CED1', band: '#FFD700' },
     effect: 'rainbow'
+  },
+  5: {
+    name: 'Espelho',
+    color: '#C0C0C0',
+    gradient: 'linear-gradient(135deg, #E0E0E0, #FFFFFF, #C0C0C0, #F0F0F0)',
+    slingshotColors: { base: '#C0C0C0', arms: '#E0E0E0', band: '#A0A0A0' },
+    effect: 'mirror',
+    ricochet: true
   }
 };
 
