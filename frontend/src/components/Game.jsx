@@ -569,7 +569,7 @@ const Game = ({ playerData, playerId, onUpdate }) => {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [gameActive, playerData]);
+  }, [playerData]); // Removido gameActive das dependências para que o loop continue sempre
 
   const handleTargetHit = async () => {
     setGameActive(false);
