@@ -14,8 +14,9 @@ const API = `${BACKEND_URL}/api`;
 function App() {
   const [playerId, setPlayerId] = useState(null);
   const [playerData, setPlayerData] = useState(null);
-  const [currentView, setCurrentView] = useState('game'); // 'game', 'shop', 'inventory'
+  const [currentView, setCurrentView] = useState('game'); // 'game', 'shop', 'inventory', 'account'
   const [loading, setLoading] = useState(true);
+  const [isGuest, setIsGuest] = useState(false); // Modo visitante
   const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [adminCode, setAdminCode] = useState('');
   const [coinsToAdd, setCoinsToAdd] = useState(100);
