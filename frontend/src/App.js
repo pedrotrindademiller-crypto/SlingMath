@@ -347,32 +347,36 @@ function App() {
               <p className="login-subtitle">Bem-vindo ao jogo de matemática!</p>
             </div>
 
-            <div className="login-tabs">
-              <button 
-                className={`login-tab ${isSignup ? 'active' : ''}`}
-                onClick={() => {
-                  setIsSignup(true);
-                  setLoginError('');
-                }}
-              >
-                Criar Conta
-              </button>
-              <button 
-                className={`login-tab ${!isSignup ? 'active' : ''}`}
-                onClick={() => {
-                  setIsSignup(false);
-                  setLoginError('');
-                }}
-              >
-                Entrar
-              </button>
-            </div>
+            {!needsPasswordSetup && (
+              <div className="login-tabs">
+                <button 
+                  className={`login-tab ${isSignup ? 'active' : ''}`}
+                  onClick={() => {
+                    setIsSignup(true);
+                    setLoginError('');
+                  }}
+                >
+                  Criar Conta
+                </button>
+                <button 
+                  className={`login-tab ${!isSignup ? 'active' : ''}`}
+                  onClick={() => {
+                    setIsSignup(false);
+                    setLoginError('');
+                  }}
+                >
+                  Entrar
+                </button>
+              </div>
+            )}
 
             <div className="login-content">
               <p className="login-description">
-                {isSignup 
-                  ? 'Crie sua conta para salvar seu progresso e competir!'
-                  : 'Entre com sua conta para continuar jogando!'
+                {needsPasswordSetup
+                  ? '🔐 Sua conta existe! Defina uma senha para proteger seu progresso.'
+                  : isSignup 
+                    ? 'Crie sua conta para salvar seu progresso e competir!'
+                    : 'Entre com sua conta para continuar jogando!'
                 }
               </p>
 
