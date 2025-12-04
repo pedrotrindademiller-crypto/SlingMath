@@ -745,58 +745,8 @@ const Game = ({ playerData, playerId, onUpdate }) => {
   };
 
   const handleMouseMove = (e) => {
-    if (!gameActive) return; // Não permite mover se o jogo não estiver ativo
+    // Movimento no canvas - os listeners globais já cuidam de tudo
     if (e.cancelable) e.preventDefault();
-    const slingshot = slingshotRef.current;
-    if (!slingshot.pulling) return;
-
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    // Obter posição considerando eventos fora do canvas
-    const rect = canvas.getBoundingClientRect();
-    const clientX = e.clientX || (e.touches && e.touches[0]?.clientX);
-    const clientY = e.clientY || (e.touches && e.touches[0]?.clientY);
-    
-    if (clientX === undefined || clientY === undefined) return;
-    
-    const pos = {
-      x: clientX - rect.left,
-      y: clientY - rect.top
-    };
-    
-    // Definir limites para puxar o estilingue
-    const maxPullDistance = 150; // Distância máxima de puxar
-    const minY = slingshot.y; // Não deixar puxar PARA CIMA do estilingue
-    const minX = -200; // Permitir sair muito da tela na esquerda
-    const maxX = canvas.width + 200; // Permitir sair muito da tela na direita
-    
-    // Calcular distância do puxão
-    let pullX = pos.x;
-    let pullY = pos.y;
-    
-    // Aplicar limites: Só pode puxar para baixo (y >= slingshot.y)
-    pullY = Math.max(minY, pullY); // NÃO deixa puxar para cima
-    
-    // Limites laterais muito flexíveis
-    pullX = Math.max(minX, Math.min(maxX, pullX));
-    
-    // Calcular distância do centro do estilingue
-    const dx = pullX - slingshot.x;
-    const dy = pullY - slingshot.y;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    
-    // Se ultrapassar a distância máxima, limitar ao raio máximo
-    if (distance > maxPullDistance) {
-      const angle = Math.atan2(dy, dx);
-      pullX = slingshot.x + Math.cos(angle) * maxPullDistance;
-      pullY = slingshot.y + Math.sin(angle) * maxPullDistance;
-      
-      // Garantir que ainda está abaixo do estilingue
-      pullY = Math.max(minY, pullY);
-    }
-    
-    slingshotRef.current = { ...slingshot, pullX, pullY };
   };
 
   const handleMouseUp = (e) => {
