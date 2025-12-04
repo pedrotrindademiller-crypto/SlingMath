@@ -92,22 +92,22 @@ const Game = ({ playerData, playerId, onUpdate }) => {
   // Explosão vermelha quando acerta o alvo
   const createTargetHitExplosion = (x, y) => {
     const particles = [];
-    const particleCount = 15;
-    const redColors = ['#FF0000', '#DC143C', '#8B0000', '#B22222', '#CD5C5C', '#FF6347'];
+    const particleCount = 40; // Aumentado de 15 para 40 - explosão mais densa
+    const redColors = ['#FF0000', '#DC143C', '#8B0000', '#B22222', '#CD5C5C', '#FF6347', '#FF4500', '#FF1493'];
     
     for (let i = 0; i < particleCount; i++) {
       const angle = (Math.PI * 2 * i) / particleCount;
-      const speed = 2 + Math.random() * 3;
+      const speed = 3 + Math.random() * 5; // Velocidade aumentada (era 2-5, agora 3-8)
       
       particles.push({
         x: x,
         y: y,
         velocityX: Math.cos(angle) * speed,
         velocityY: Math.sin(angle) * speed,
-        size: 4 + Math.random() * 6,
+        size: 5 + Math.random() * 8, // Partículas maiores (era 4-10, agora 5-13)
         color: redColors[Math.floor(Math.random() * redColors.length)],
         life: 1.0,
-        decay: 0.03 + Math.random() * 0.02,
+        decay: 0.015 + Math.random() * 0.01, // Decay reduzido (era 0.03-0.05, agora 0.015-0.025) - dura ~40-66 frames
         type: 'target-hit'
       });
     }
