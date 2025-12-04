@@ -207,6 +207,17 @@ const Game = ({ playerData, playerId, onUpdate }) => {
           type: 'rainbow'
         };
       
+      case 'mirror': // Partículas de cristal brilhantes
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1,
+          velocityY: -0.3 - Math.random() * 1,
+          size: 2 + Math.random() * 3,
+          color: ['#FFFFFF', '#E0E0E0', '#C0C0C0', '#F0F0F0'][Math.floor(Math.random() * 4)],
+          decay: 0.02 + Math.random() * 0.01,
+          type: 'mirror'
+        };
+      
       default:
         return null;
     }
