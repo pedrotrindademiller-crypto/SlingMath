@@ -156,18 +156,23 @@ body {
   }
 
   .header-content {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .game-title {
     font-size: 1.3rem;
+    flex: 0 0 auto;
   }
 
   .header-stats {
     gap: 0.5rem;
-    flex-direction: column;
-    width: 100%;
+    flex-direction: row;
+    flex: 0 0 auto;
+    width: auto;
   }
 
   .header-buttons {
@@ -175,6 +180,7 @@ body {
     width: 100%;
     justify-content: space-between;
     gap: 0.4rem;
+    flex: 1 1 100%;
   }
 
   .coin-display {
