@@ -227,9 +227,58 @@ const Game = ({ playerData, playerId, onUpdate }) => {
     };
   }, []);
 
-  // Add global mouse/touch up listeners to handle release outside canvas
+  // Add global mouse/touch listeners to handle events outside canvas
   useEffect(() => {
-    const handleGlobalMouseUp = (e) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const handleGlobalMove = (e) => {
+      if (!gameActive) return;
+      const slingshot = slingshotRef.current;
+      if (!slingshot.pulling) return;
+
+      // Obter posição considerando eventos fora do canvas
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.clientX || (e.touches && e.touches[0]?.clientX);
+      const clientY = e.clientY || (e.touches && e.touches[0]?.clientY);
+      
+      if (clientX === undefined || clientY === undefined) return;
+      
+      const pos = {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+      
+      // Definir limites para puxar o estilingue
+      const maxPullDistance = 150;
+      const minY = slingshot.y; // Não deixar puxar PARA CIMA do estilingue
+      const minX = -200;
+      const maxX = canvas.width + 200;
+      
+      let pullX = pos.x;
+      let pullY = pos.y;
+      
+      // Aplicar limites: Só pode puxar para baixo
+      pullY = Math.max(minY, pullY);
+      pullX = Math.max(minX, Math.min(maxX, pullX));
+      
+      // Calcular distância do centro do estilingue
+      const dx = pullX - slingshot.x;
+      const dy = pullY - slingshot.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      
+      // Se ultrapassar a distância máxima, limitar ao raio máximo
+      if (distance > maxPullDistance) {
+        const angle = Math.atan2(dy, dx);
+        pullX = slingshot.x + Math.cos(angle) * maxPullDistance;
+        pullY = slingshot.y + Math.sin(angle) * maxPullDistance;
+        pullY = Math.max(minY, pullY);
+      }
+      
+      slingshotRef.current = { ...slingshot, pullX, pullY };
+    };
+
+    const handleGlobalUp = (e) => {
       if (!gameActive) return;
       const slingshot = slingshotRef.current;
       if (!slingshot.pulling) return;
@@ -251,17 +300,17 @@ const Game = ({ playerData, playerId, onUpdate }) => {
       slingshotRef.current = { ...slingshot, pulling: false, pullX: 0, pullY: 0 };
     };
 
-    const handleGlobalTouchEnd = (e) => {
-      handleGlobalMouseUp(e);
-    };
-
     // Add listeners to document to catch events outside canvas
-    document.addEventListener('mouseup', handleGlobalMouseUp);
-    document.addEventListener('touchend', handleGlobalTouchEnd);
+    document.addEventListener('mousemove', handleGlobalMove);
+    document.addEventListener('touchmove', handleGlobalMove, { passive: false });
+    document.addEventListener('mouseup', handleGlobalUp);
+    document.addEventListener('touchend', handleGlobalUp);
 
     return () => {
-      document.removeEventListener('mouseup', handleGlobalMouseUp);
-      document.removeEventListener('touchend', handleGlobalTouchEnd);
+      document.removeEventListener('mousemove', handleGlobalMove);
+      document.removeEventListener('touchmove', handleGlobalMove);
+      document.removeEventListener('mouseup', handleGlobalUp);
+      document.removeEventListener('touchend', handleGlobalUp);
     };
   }, [gameActive]);
 
