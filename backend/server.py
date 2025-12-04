@@ -10,6 +10,7 @@ from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
 import random
+import bcrypt
 
 
 ROOT_DIR = Path(__file__).parent
