@@ -32,6 +32,7 @@ class Player(BaseModel):
     model_config = ConfigDict(extra="ignore")
     
     playerId: str
+    email: Optional[str] = None
     coins: int = 0
     unlockedSkins: List[int] = Field(default_factory=lambda: [0])  # Skin 0 is default
     selectedSkin: int = 0
@@ -42,6 +43,7 @@ class Player(BaseModel):
 
 class PlayerCreate(BaseModel):
     playerId: str
+    email: Optional[str] = None
 
 class PlayerUpdate(BaseModel):
     coins: Optional[int] = None
