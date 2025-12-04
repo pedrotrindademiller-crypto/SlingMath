@@ -287,12 +287,245 @@ const Game = ({ playerData, playerId, onUpdate }) => {
         return {
           ...particle,
           velocityX: (Math.random() - 0.5) * 0.5,
-          velocityY: 1 + Math.random() * 2, // Caindo como Matrix
+          velocityY: 1 + Math.random() * 2,
           size: 8 + Math.random() * 4,
           color: ['#00FF00', '#00AA00', '#00FF41'][Math.floor(Math.random() * 3)],
           decay: 0.015 + Math.random() * 0.01,
           type: 'hacker',
           char: numbers[Math.floor(Math.random() * numbers.length)]
+        };
+      
+      case 'nature': // Folhas e musgo
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1.5,
+          velocityY: -0.5 - Math.random() * 1,
+          size: 4 + Math.random() * 6,
+          color: ['#556B2F', '#6B8E23', '#8FBC8F', '#2E8B57'][Math.floor(Math.random() * 4)],
+          decay: 0.02 + Math.random() * 0.01,
+          type: 'leaf'
+        };
+      
+      case 'electric': // Faíscas elétricas
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 3,
+          velocityY: (Math.random() - 0.5) * 3,
+          size: 2 + Math.random() * 4,
+          color: ['#FFFF00', '#FFD700', '#00BFFF', '#1E90FF'][Math.floor(Math.random() * 4)],
+          decay: 0.04 + Math.random() * 0.02,
+          type: 'spark'
+        };
+      
+      case 'mechanical': // Engrenagens e metal
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1,
+          velocityY: -0.3 - Math.random() * 1,
+          size: 5 + Math.random() * 5,
+          color: ['#B87333', '#CD7F32', '#8B7355'][Math.floor(Math.random() * 3)],
+          decay: 0.025 + Math.random() * 0.015,
+          type: 'gear',
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.2
+        };
+      
+      case 'neon': // Luzes neon RGB
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 2,
+          velocityY: -1 - Math.random() * 1.5,
+          size: 3 + Math.random() * 5,
+          color: ['#FF00FF', '#00FFFF', '#FF1493', '#00FF00', '#FFFF00'][Math.floor(Math.random() * 5)],
+          decay: 0.03 + Math.random() * 0.02,
+          type: 'neon'
+        };
+      
+      case 'hologram': // Partículas holográficas
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1,
+          velocityY: -2 - Math.random() * 1,
+          size: 4 + Math.random() * 4,
+          color: ['#E0BBE4', '#957DAD', '#D291BC', '#FEC8D8'][Math.floor(Math.random() * 4)],
+          decay: 0.02 + Math.random() * 0.01,
+          type: 'hologram'
+        };
+      
+      case 'shadow': // Fumaça púrpura
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 2,
+          velocityY: -0.5 - Math.random() * 0.5,
+          size: 8 + Math.random() * 10,
+          color: ['#4B0082', '#8B008B', '#9370DB'][Math.floor(Math.random() * 3)],
+          decay: 0.015 + Math.random() * 0.01,
+          type: 'smoke'
+        };
+      
+      case 'crystal': // Cristais flutuantes
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 0.5,
+          velocityY: -1.5 - Math.random() * 1,
+          size: 4 + Math.random() * 6,
+          color: ['#9370DB', '#BA55D3', '#DA70D6', '#DDA0DD'][Math.floor(Math.random() * 4)],
+          decay: 0.018 + Math.random() * 0.012,
+          type: 'crystal'
+        };
+      
+      case 'fun': // Bolhas coloridas divertidas
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1.5,
+          velocityY: -1 - Math.random() * 2,
+          size: 5 + Math.random() * 8,
+          color: ['#FF6B9D', '#FEC368', '#96E6A1', '#FFE135'][Math.floor(Math.random() * 4)],
+          decay: 0.02 + Math.random() * 0.015,
+          type: 'bubble'
+        };
+      
+      case 'water': // Gotas de água
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1,
+          velocityY: 0.5 + Math.random() * 1.5,
+          size: 3 + Math.random() * 5,
+          color: ['#00CED1', '#48D1CC', '#40E0D0', '#7FFFD4'][Math.floor(Math.random() * 4)],
+          decay: 0.025 + Math.random() * 0.015,
+          type: 'water'
+        };
+      
+      case 'science': // Líquido químico
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1.2,
+          velocityY: -0.5 - Math.random() * 1.5,
+          size: 4 + Math.random() * 5,
+          color: ['#00CED1', '#20B2AA', '#5F9EA0', '#48D1CC'][Math.floor(Math.random() * 4)],
+          decay: 0.022 + Math.random() * 0.013,
+          type: 'liquid'
+        };
+      
+      case 'tech': // Pixels tecnológicos
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 2,
+          velocityY: -1 - Math.random() * 1,
+          size: 3 + Math.random() * 4,
+          color: ['#FF6347', '#FF7F50', '#FFA07A'][Math.floor(Math.random() * 3)],
+          decay: 0.03 + Math.random() * 0.02,
+          type: 'pixel'
+        };
+      
+      case 'glow': // Bioluminescência
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1,
+          velocityY: -0.8 - Math.random() * 1.2,
+          size: 4 + Math.random() * 6,
+          color: ['#00FF7F', '#7FFFD4', '#AFEEEE', '#00FA9A'][Math.floor(Math.random() * 4)],
+          decay: 0.018 + Math.random() * 0.012,
+          type: 'glow'
+        };
+      
+      case 'atomic': // Partículas atômicas
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 2.5,
+          velocityY: (Math.random() - 0.5) * 2.5,
+          size: 3 + Math.random() * 4,
+          color: ['#00FA9A', '#00FF7F', '#7CFC00', '#32CD32'][Math.floor(Math.random() * 4)],
+          decay: 0.025 + Math.random() * 0.015,
+          type: 'atom'
+        };
+      
+      case 'carbon': // Fibras de carbono
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1,
+          velocityY: -0.5 - Math.random() * 1,
+          size: 2 + Math.random() * 3,
+          color: ['#2F4F4F', '#696969', '#808080'][Math.floor(Math.random() * 3)],
+          decay: 0.02 + Math.random() * 0.01,
+          type: 'fiber'
+        };
+      
+      case 'metal': // Brilho metálico
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1.5,
+          velocityY: -0.5 - Math.random() * 1.5,
+          size: 3 + Math.random() * 5,
+          color: ['#C0C0C0', '#A9A9A9', '#D3D3D3', '#DCDCDC'][Math.floor(Math.random() * 4)],
+          decay: 0.022 + Math.random() * 0.013,
+          type: 'metal'
+        };
+      
+      case 'stone': // Pedaços de pedra
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1.2,
+          velocityY: 0.5 + Math.random() * 1,
+          size: 4 + Math.random() * 6,
+          color: ['#8B7355', '#A0826D', '#BC8F8F'][Math.floor(Math.random() * 3)],
+          decay: 0.015 + Math.random() * 0.01,
+          type: 'rock'
+        };
+      
+      case 'bone': // Partículas de osso
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1.5,
+          velocityY: -0.5 - Math.random() * 1,
+          size: 4 + Math.random() * 6,
+          color: ['#F5F5DC', '#FFFAF0', '#FFE4B5'][Math.floor(Math.random() * 3)],
+          decay: 0.02 + Math.random() * 0.01,
+          type: 'bone'
+        };
+      
+      case 'pumpkin': // Sementes de abóbora
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1.5,
+          velocityY: -1 - Math.random() * 1.5,
+          size: 4 + Math.random() * 6,
+          color: ['#FF8C00', '#FFA500', '#FF7F50'][Math.floor(Math.random() * 3)],
+          decay: 0.02 + Math.random() * 0.015,
+          type: 'seed'
+        };
+      
+      case 'candy': // Açúcar cristalizado
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1.5,
+          velocityY: -1 - Math.random() * 1.5,
+          size: 3 + Math.random() * 5,
+          color: ['#FF0000', '#FFFFFF', '#FFB6C1'][Math.floor(Math.random() * 3)],
+          decay: 0.025 + Math.random() * 0.015,
+          type: 'candy'
+        };
+      
+      case 'future': // Partículas futuristas
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 2,
+          velocityY: -1 - Math.random() * 2,
+          size: 2 + Math.random() * 4,
+          color: ['#00FFFF', '#0080FF', '#0040FF', '#00BFFF'][Math.floor(Math.random() * 4)],
+          decay: 0.03 + Math.random() * 0.02,
+          type: 'digital'
+        };
+      
+      case 'wood': // Lascas de madeira
+        return {
+          ...particle,
+          velocityX: (Math.random() - 0.5) * 1,
+          velocityY: -0.5 - Math.random() * 1,
+          size: 4 + Math.random() * 5,
+          color: ['#8B4513', '#A0522D', '#D2691E'][Math.floor(Math.random() * 3)],
+          decay: 0.02 + Math.random() * 0.01,
+          type: 'splinter'
         };
       
       default:
