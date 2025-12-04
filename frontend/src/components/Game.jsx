@@ -697,20 +697,30 @@ const Game = ({ playerData, playerId, onUpdate }) => {
 
   const handleMouseMove = (e) => {
     if (!gameActive) return; // Não permite mover se o jogo não estiver ativo
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault();
     const slingshot = slingshotRef.current;
     if (!slingshot.pulling) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const pos = getEventPosition(e);
+    // Obter posição considerando eventos fora do canvas
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.clientX || (e.touches && e.touches[0]?.clientX);
+    const clientY = e.clientY || (e.touches && e.touches[0]?.clientY);
+    
+    if (clientX === undefined || clientY === undefined) return;
+    
+    const pos = {
+      x: clientX - rect.left,
+      y: clientY - rect.top
+    };
     
     // Definir limites para puxar o estilingue
-    const maxPullDistance = 150; // Distância máxima de puxar (aumentado para permitir puxar mais)
+    const maxPullDistance = 150; // Distância máxima de puxar
     const minY = slingshot.y; // Não deixar puxar PARA CIMA do estilingue
-    const minX = -50; // Permitir sair um pouco da tela na esquerda
-    const maxX = canvas.width + 50; // Permitir sair um pouco da tela na direita
+    const minX = -200; // Permitir sair muito da tela na esquerda
+    const maxX = canvas.width + 200; // Permitir sair muito da tela na direita
     
     // Calcular distância do puxão
     let pullX = pos.x;
@@ -719,7 +729,7 @@ const Game = ({ playerData, playerId, onUpdate }) => {
     // Aplicar limites: Só pode puxar para baixo (y >= slingshot.y)
     pullY = Math.max(minY, pullY); // NÃO deixa puxar para cima
     
-    // Limites laterais mais flexíveis
+    // Limites laterais muito flexíveis
     pullX = Math.max(minX, Math.min(maxX, pullX));
     
     // Calcular distância do centro do estilingue
