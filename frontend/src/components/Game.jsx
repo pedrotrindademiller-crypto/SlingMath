@@ -572,8 +572,8 @@ const Game = ({ playerData, playerId, onUpdate }) => {
   const handleTargetHit = async () => {
     setGameActive(false);
     
-    // Aguardar 1.5 segundos para ver a explosão vermelha ANTES de mostrar a questão
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Aguardar 2 segundos para ver a explosão vermelha completamente ANTES de mostrar a questão
+    await new Promise(resolve => setTimeout(resolve, 2000));
     
     try {
       const response = await axios.get(`${API}/question/${playerData.questionLevel}`);
