@@ -44,40 +44,34 @@ function App() {
 
   const initializePlayer = async () => {
     try {
-      // Check if user has email saved
-      const savedEmail = localStorage.getItem('slingmath_email');
+      // Check if user is logged in
       const savedPlayerId = localStorage.getItem('slingmath_player_id');
+      const savedEmail = localStorage.getItem('slingmath_email');
 
-      if (!savedEmail) {
-        // Show login modal if no email
+      if (!savedPlayerId || !savedEmail) {
+        // Show login modal if not logged in
         setLoading(false);
         setShowLoginModal(true);
         return;
       }
 
-      // Get or create player ID
-      let id = savedPlayerId;
-      if (!id) {
-        id = `player_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        localStorage.setItem('slingmath_player_id', id);
-      }
-      setPlayerId(id);
+      setPlayerId(savedPlayerId);
 
-      // Get or create player data with email
-      const response = await axios.post(`${API}/player`, { 
-        playerId: id,
-        email: savedEmail 
-      });
+      // Get player data
+      const response = await axios.get(`${API}/player/${savedPlayerId}`);
       setPlayerData(response.data);
       setLoading(false);
     } catch (error) {
       console.error('Error initializing player:', error);
-      toast.error('Erro ao carregar dados do jogador');
+      // If error, show login modal
+      localStorage.removeItem('slingmath_player_id');
+      localStorage.removeItem('slingmath_email');
       setLoading(false);
+      setShowLoginModal(true);
     }
   };
 
-  const handleLogin = async () => {
+  const handleAuth = async () => {
     setLoginError('');
     
     // Validate email
@@ -87,30 +81,47 @@ function App() {
       return;
     }
 
+    // Validate password
+    if (!password || password.length < 6) {
+      setLoginError('A senha deve ter pelo menos 6 caracteres');
+      return;
+    }
+
     try {
-      // Generate or get player ID
-      let id = localStorage.getItem('slingmath_player_id');
-      if (!id) {
-        id = `player_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        localStorage.setItem('slingmath_player_id', id);
+      if (isSignup) {
+        // Signup
+        const response = await axios.post(`${API}/signup`, { 
+          email,
+          password
+        });
+        
+        // Save credentials
+        localStorage.setItem('slingmath_player_id', response.data.playerId);
+        localStorage.setItem('slingmath_email', response.data.email);
+        
+        setPlayerId(response.data.playerId);
+        setPlayerData(response.data.player);
+        setShowLoginModal(false);
+        toast.success(`Conta criada! Bem-vindo, ${email}! 🎮`);
+      } else {
+        // Login
+        const response = await axios.post(`${API}/login`, { 
+          email,
+          password
+        });
+        
+        // Save credentials
+        localStorage.setItem('slingmath_player_id', response.data.playerId);
+        localStorage.setItem('slingmath_email', response.data.email);
+        
+        setPlayerId(response.data.playerId);
+        setPlayerData(response.data.player);
+        setShowLoginModal(false);
+        toast.success(`Bem-vindo de volta, ${email}! 🎮`);
       }
-
-      // Save email
-      localStorage.setItem('slingmath_email', email);
-      setPlayerId(id);
-
-      // Create/get player with email
-      const response = await axios.post(`${API}/player`, { 
-        playerId: id,
-        email: email 
-      });
-      
-      setPlayerData(response.data);
-      setShowLoginModal(false);
-      toast.success(`Bem-vindo, ${email}! 🎮`);
     } catch (error) {
-      console.error('Error logging in:', error);
-      setLoginError('Erro ao fazer login. Tente novamente.');
+      console.error('Error authenticating:', error);
+      setLoginError(error.response?.data?.detail || 'Erro ao autenticar. Tente novamente.');
     }
   };
 
