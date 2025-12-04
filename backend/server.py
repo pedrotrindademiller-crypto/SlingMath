@@ -55,6 +55,10 @@ class LoginRequest(BaseModel):
     email: str
     password: str
 
+class SetPasswordRequest(BaseModel):
+    email: str
+    password: str
+
 class PlayerUpdate(BaseModel):
     coins: Optional[int] = None
     unlockedSkins: Optional[List[int]] = None
