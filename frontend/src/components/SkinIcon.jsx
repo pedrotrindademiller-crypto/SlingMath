@@ -219,6 +219,62 @@ const SkinIcon = ({ skinId, size = 120 }) => {
           ctx.fill();
         }
         break;
+      case 6: // Hacker
+        // Gradiente verde Matrix
+        const hackerGradient = ctx.createLinearGradient(centerX, centerY + 25 * scale, centerX, centerY - 25 * scale);
+        hackerGradient.addColorStop(0, '#003300');
+        hackerGradient.addColorStop(0.5, '#00AA00');
+        hackerGradient.addColorStop(1, '#00FF00');
+        
+        ctx.strokeStyle = hackerGradient;
+        ctx.lineWidth = 8 * scale;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY + 25 * scale);
+        ctx.lineTo(centerX, centerY);
+        ctx.stroke();
+
+        // Braços verdes
+        ctx.strokeStyle = '#00AA00';
+        ctx.lineWidth = 6 * scale;
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(centerX - 20 * scale, centerY - 25 * scale);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#00FF00';
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(centerX + 20 * scale, centerY - 25 * scale);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#00FF41';
+        ctx.lineWidth = 3 * scale;
+        ctx.beginPath();
+        ctx.moveTo(centerX - 20 * scale, centerY - 25 * scale);
+        ctx.lineTo(centerX + 20 * scale, centerY - 25 * scale);
+        ctx.stroke();
+
+        // Números binários Matrix
+        ctx.font = `bold ${8 * scale}px "Courier New", monospace`;
+        ctx.fillStyle = '#00FF00';
+        ctx.textAlign = 'center';
+        const binaryNumbers = ['0', '1', '0', '1', '1'];
+        for (let i = 0; i < binaryNumbers.length; i++) {
+          const x = centerX + (i - 2) * 8 * scale;
+          const y = centerY + (Math.random() - 0.5) * 20 * scale;
+          ctx.fillText(binaryNumbers[i], x, y);
+        }
+        
+        // Efeito de brilho
+        ctx.shadowBlur = 10 * scale;
+        ctx.shadowColor = '#00FF00';
+        ctx.fillStyle = 'rgba(0, 255, 0, 0.8)';
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, 3 * scale, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        break;
       default:
         drawSlingshot('#654321', '#654321', '#333333', null);
     }
