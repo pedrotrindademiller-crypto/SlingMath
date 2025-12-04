@@ -19,6 +19,9 @@ function App() {
   const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [adminCode, setAdminCode] = useState('');
   const [coinsToAdd, setCoinsToAdd] = useState(100);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [email, setEmail] = useState('');
+  const [loginError, setLoginError] = useState('');
 
   useEffect(() => {
     initializePlayer();
