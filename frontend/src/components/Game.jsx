@@ -44,6 +44,14 @@ const SKINS = {
     slingshotColors: { base: '#C0C0C0', arms: '#E0E0E0', band: '#A0A0A0' },
     effect: 'mirror',
     ricochet: true
+  },
+  6: {
+    name: 'Hacker',
+    color: '#00FF00',
+    gradient: 'linear-gradient(135deg, #00FF00, #00AA00, #003300, #00FF00)',
+    slingshotColors: { base: '#003300', arms: '#00AA00', band: '#00FF00' },
+    effect: 'hacker',
+    instantKill: true
   }
 };
 
