@@ -306,9 +306,33 @@ function App() {
               <p className="login-subtitle">Bem-vindo ao jogo de matemática!</p>
             </div>
 
+            <div className="login-tabs">
+              <button 
+                className={`login-tab ${isSignup ? 'active' : ''}`}
+                onClick={() => {
+                  setIsSignup(true);
+                  setLoginError('');
+                }}
+              >
+                Criar Conta
+              </button>
+              <button 
+                className={`login-tab ${!isSignup ? 'active' : ''}`}
+                onClick={() => {
+                  setIsSignup(false);
+                  setLoginError('');
+                }}
+              >
+                Entrar
+              </button>
+            </div>
+
             <div className="login-content">
               <p className="login-description">
-                Para começar a jogar, precisamos do seu email para salvar seu progresso.
+                {isSignup 
+                  ? 'Crie sua conta para salvar seu progresso e competir!'
+                  : 'Entre com sua conta para continuar jogando!'
+                }
               </p>
 
               <div className="login-form">
@@ -323,24 +347,40 @@ function App() {
                     }}
                     placeholder="seu@email.com"
                     className="login-input"
-                    onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
                     autoFocus
                   />
-                  {loginError && (
-                    <p className="login-error">{loginError}</p>
-                  )}
                 </div>
 
+                <div className="login-input-group">
+                  <label>Senha:</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setLoginError('');
+                    }}
+                    placeholder="••••••••"
+                    className="login-input"
+                    onKeyPress={(e) => e.key === 'Enter' && handleAuth()}
+                  />
+                  <p className="login-hint">Mínimo 6 caracteres</p>
+                </div>
+
+                {loginError && (
+                  <p className="login-error">{loginError}</p>
+                )}
+
                 <Button 
-                  onClick={handleLogin}
+                  onClick={handleAuth}
                   className="login-button"
-                  disabled={!email}
+                  disabled={!email || !password}
                 >
-                  Começar a Jogar
+                  {isSignup ? 'Criar Conta' : 'Entrar'}
                 </Button>
 
                 <p className="login-privacy">
-                  🔒 Seu email é usado apenas para salvar seu progresso e não será compartilhado.
+                  🔒 Seus dados são protegidos e não serão compartilhados.
                 </p>
               </div>
             </div>
