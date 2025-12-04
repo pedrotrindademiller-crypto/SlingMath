@@ -117,6 +117,8 @@ function App() {
         {currentView === 'inventory' && (
           <Inventory 
             playerData={playerData}
+            playerId={playerId}
+            onUpdate={refreshPlayerData}
           />
         )}
         
