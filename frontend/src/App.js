@@ -16,9 +16,25 @@ function App() {
   const [playerData, setPlayerData] = useState(null);
   const [currentView, setCurrentView] = useState('game'); // 'game', 'shop', 'inventory'
   const [loading, setLoading] = useState(true);
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
+  const [adminCode, setAdminCode] = useState('');
+  const [coinsToAdd, setCoinsToAdd] = useState(100);
 
   useEffect(() => {
     initializePlayer();
+  }, []);
+
+  // Admin panel shortcut: Ctrl + Shift + A
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        e.preventDefault();
+        setShowAdminPanel(true);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const initializePlayer = async () => {
