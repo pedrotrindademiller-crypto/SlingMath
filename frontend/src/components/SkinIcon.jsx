@@ -171,6 +171,54 @@ const SkinIcon = ({ skinId, size = 120 }) => {
 
         drawSlingshot(null, null, null, 'rainbow');
         break;
+      case 5: // Espelho
+        // Gradiente prateado/cristal
+        const mirrorGradient = ctx.createLinearGradient(centerX, centerY + 25 * scale, centerX, centerY - 25 * scale);
+        mirrorGradient.addColorStop(0, '#E0E0E0');
+        mirrorGradient.addColorStop(0.5, '#FFFFFF');
+        mirrorGradient.addColorStop(1, '#C0C0C0');
+        
+        ctx.strokeStyle = mirrorGradient;
+        ctx.lineWidth = 8 * scale;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY + 25 * scale);
+        ctx.lineTo(centerX, centerY);
+        ctx.stroke();
+
+        // Braços prateados
+        ctx.strokeStyle = '#E0E0E0';
+        ctx.lineWidth = 6 * scale;
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(centerX - 20 * scale, centerY - 25 * scale);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#F0F0F0';
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(centerX + 20 * scale, centerY - 25 * scale);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#A0A0A0';
+        ctx.lineWidth = 3 * scale;
+        ctx.beginPath();
+        ctx.moveTo(centerX - 20 * scale, centerY - 25 * scale);
+        ctx.lineTo(centerX + 20 * scale, centerY - 25 * scale);
+        ctx.stroke();
+
+        // Efeito de brilho cristalino
+        for (let i = 0; i < 5; i++) {
+          const sparkX = centerX + (Math.random() - 0.5) * 35 * scale;
+          const sparkY = centerY + (Math.random() - 0.5) * 25 * scale;
+          const sparkSize = 2 + Math.random() * 2;
+          
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+          ctx.beginPath();
+          ctx.arc(sparkX, sparkY, sparkSize * scale, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        break;
       default:
         drawSlingshot('#654321', '#654321', '#333333', null);
     }
