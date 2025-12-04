@@ -72,6 +72,30 @@ function App() {
     }
   };
 
+  const checkEmail = async () => {
+    setLoginError('');
+    
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      setLoginError('Por favor, insira um email válido');
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${API}/check-email`, { email });
+      
+      if (response.data.exists && response.data.needsPassword) {
+        // Conta antiga sem senha - precisa definir senha
+        setNeedsPasswordSetup(true);
+        setIsSignup(false);
+        toast.info('Defina uma senha para sua conta existente!');
+      }
+    } catch (error) {
+      console.error('Error checking email:', error);
+    }
+  };
+
   const handleAuth = async () => {
     setLoginError('');
     
@@ -89,7 +113,23 @@ function App() {
     }
 
     try {
-      if (isSignup) {
+      if (needsPasswordSetup) {
+        // Definir senha para conta antiga
+        const response = await axios.post(`${API}/set-password`, { 
+          email,
+          password
+        });
+        
+        // Save credentials
+        localStorage.setItem('slingmath_player_id', response.data.playerId);
+        localStorage.setItem('slingmath_email', response.data.email);
+        
+        setPlayerId(response.data.playerId);
+        setPlayerData(response.data.player);
+        setShowLoginModal(false);
+        setNeedsPasswordSetup(false);
+        toast.success(`Senha definida! Bem-vindo de volta, ${email}! 🎮`);
+      } else if (isSignup) {
         // Signup
         const response = await axios.post(`${API}/signup`, { 
           email,
