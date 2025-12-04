@@ -237,13 +237,25 @@ async def purchase_skin(purchase: PurchaseRequest):
     if purchase.skinId in player['unlockedSkins']:
         raise HTTPException(status_code=400, detail="Skin already owned")
     
+    # Skin prices
+    skin_prices = {
+        0: 0,   # Clássico (free)
+        1: 50,  # Fogo
+        2: 50,  # Gelo
+        3: 50,  # Ouro
+        4: 50,  # Arco-íris
+        5: 75   # Espelho
+    }
+    
+    skin_price = skin_prices.get(purchase.skinId, 50)
+    
     # Check if enough coins
-    if player['coins'] < 50:
+    if player['coins'] < skin_price:
         raise HTTPException(status_code=400, detail="Not enough coins")
     
     # Purchase skin
     new_skins = player['unlockedSkins'] + [purchase.skinId]
-    new_coins = player['coins'] - 50
+    new_coins = player['coins'] - skin_price
     
     await db.players.update_one(
         {"playerId": purchase.playerId},
