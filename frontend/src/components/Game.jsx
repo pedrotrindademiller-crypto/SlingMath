@@ -591,6 +591,19 @@ const Game = ({ playerData, playerId, onUpdate }) => {
             }
             ctx.closePath();
             ctx.fill();
+          } else if (particle.type === 'mirror') {
+            // Cristais brilhantes
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Adicionar brilho extra
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.beginPath();
+            ctx.arc(particle.x - particle.size * 0.3, particle.y - particle.size * 0.3, particle.size * 0.5, 0, Math.PI * 2);
+            ctx.fill();
           } else {
             // Outros efeitos como círculos brilhantes
             ctx.shadowBlur = particle.type === 'gold' ? 10 : 5;
