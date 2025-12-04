@@ -462,10 +462,26 @@ const Game = ({ playerData, playerId, onUpdate }) => {
 
         if (hit) {
           projectileRef.current = null;
-        } else if (newX < 0 || newX > canvas.width || newY > canvas.height) {
-          // Remove if out of bounds
-          projectileRef.current = null;
         } else {
+          // Check for ricochet (Skin Espelho)
+          const skinConfig = SKINS[playerData?.selectedSkin || 0];
+          const canRicochet = skinConfig?.ricochet && !proj.hasRicocheted;
+          
+          let shouldRemove = false;
+          let newVelocityX = proj.velocityX;
+          
+          // Ricochet nas paredes laterais
+          if (canRicochet && (newX < proj.radius || newX > canvas.width - proj.radius)) {
+            newVelocityX = -proj.velocityX; // Inverte direção horizontal
+            proj.hasRicocheted = true;
+          } else if (newX < 0 || newX > canvas.width || newY > canvas.height) {
+            // Remove if out of bounds (sem ricochete ou já ricocheteou)
+            shouldRemove = true;
+          }
+          
+          if (shouldRemove) {
+            projectileRef.current = null;
+          } else {
           // Draw projectile
           ctx.save();
           ctx.beginPath();
