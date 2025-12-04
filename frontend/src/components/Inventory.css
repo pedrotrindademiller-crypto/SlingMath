@@ -128,6 +128,36 @@
   margin: 0;
 }
 
+.equip-button {
+  width: 100%;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.equip-button:hover {
+  background: linear-gradient(135deg, #764ba2, #667eea);
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.equip-button.equipped {
+  background: linear-gradient(135deg, #4ECDC4, #44A08D);
+  cursor: not-allowed;
+}
+
+.equip-button.equipped:hover {
+  transform: none;
+  box-shadow: none;
+}
+
 @media (max-width: 768px) {
   .inventory-title {
     font-size: 2rem;
