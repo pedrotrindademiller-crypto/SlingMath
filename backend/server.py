@@ -33,6 +33,7 @@ class Player(BaseModel):
     
     playerId: str
     email: Optional[str] = None
+    password: Optional[str] = None  # Hashed password
     coins: int = 0
     unlockedSkins: List[int] = Field(default_factory=lambda: [0])  # Skin 0 is default
     selectedSkin: int = 0
@@ -44,6 +45,14 @@ class Player(BaseModel):
 class PlayerCreate(BaseModel):
     playerId: str
     email: Optional[str] = None
+
+class SignupRequest(BaseModel):
+    email: str
+    password: str
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
 
 class PlayerUpdate(BaseModel):
     coins: Optional[int] = None
