@@ -643,6 +643,7 @@ const Game = ({ playerData, playerId, onUpdate }) => {
   };
 
   const handleMouseDown = (e) => {
+    if (!gameActive) return; // Não permite atirar se o jogo não estiver ativo
     e.preventDefault();
     const pos = getEventPosition(e);
 
@@ -657,6 +658,7 @@ const Game = ({ playerData, playerId, onUpdate }) => {
   };
 
   const handleMouseMove = (e) => {
+    if (!gameActive) return; // Não permite mover se o jogo não estiver ativo
     e.preventDefault();
     const slingshot = slingshotRef.current;
     if (!slingshot.pulling) return;
@@ -666,6 +668,7 @@ const Game = ({ playerData, playerId, onUpdate }) => {
   };
 
   const handleMouseUp = (e) => {
+    if (!gameActive) return; // Não permite atirar se o jogo não estiver ativo
     e.preventDefault();
     const slingshot = slingshotRef.current;
     if (!slingshot.pulling) return;
