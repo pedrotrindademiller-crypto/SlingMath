@@ -249,12 +249,13 @@ async def purchase_skin(purchase: PurchaseRequest):
     
     # Skin prices
     skin_prices = {
-        0: 0,   # Clássico (free)
-        1: 50,  # Fogo
-        2: 50,  # Gelo
-        3: 50,  # Ouro
-        4: 50,  # Arco-íris
-        5: 75   # Espelho
+        0: 0,     # Clássico (free)
+        1: 50,    # Fogo
+        2: 50,    # Gelo
+        3: 50,    # Ouro
+        4: 50,    # Arco-íris
+        5: 75,    # Espelho
+        6: 10000  # Hacker (Admin)
     }
     
     skin_price = skin_prices.get(purchase.skinId, 50)
