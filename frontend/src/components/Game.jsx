@@ -131,6 +131,34 @@ const Game = ({ playerData, playerId, onUpdate }) => {
     return particles;
   };
 
+  // Explosão verde Matrix quando usa skin Hacker
+  const createHackerExplosion = (x, y) => {
+    const particles = [];
+    const particleCount = 25;
+    const hackColors = ['#00FF00', '#00AA00', '#00FF41', '#00DD00'];
+    const hackChars = ['0', '1', 'H', 'A', 'C', 'K'];
+    
+    for (let i = 0; i < particleCount; i++) {
+      const angle = (Math.PI * 2 * i) / particleCount;
+      const speed = 3 + Math.random() * 4;
+      
+      particles.push({
+        x: x,
+        y: y,
+        velocityX: Math.cos(angle) * speed,
+        velocityY: Math.sin(angle) * speed,
+        size: 6 + Math.random() * 8,
+        color: hackColors[Math.floor(Math.random() * hackColors.length)],
+        life: 1.0,
+        decay: 0.02 + Math.random() * 0.015,
+        type: 'hacker',
+        char: hackChars[Math.floor(Math.random() * hackChars.length)]
+      });
+    }
+    
+    return particles;
+  };
+
   // Explosão de confetes quando acerta a questão
   const createConfettiExplosion = (x, y) => {
     const particles = [];
