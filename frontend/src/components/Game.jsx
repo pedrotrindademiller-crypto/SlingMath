@@ -791,12 +791,10 @@ const Game = ({ playerData, playerId, onUpdate }) => {
         className="game-canvas"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
         onTouchStart={handleMouseDown}
         onTouchMove={handleMouseMove}
-        onTouchEnd={handleMouseUp}
         data-testid="game-canvas"
+        style={{ touchAction: 'none' }}
       />
 
       <div className="game-instructions">
