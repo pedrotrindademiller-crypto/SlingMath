@@ -24,6 +24,7 @@ function App() {
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [isSignup, setIsSignup] = useState(true); // true = signup, false = login
+  const [needsPasswordSetup, setNeedsPasswordSetup] = useState(false); // Para migração de contas antigas
 
   useEffect(() => {
     initializePlayer();
