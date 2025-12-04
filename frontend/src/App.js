@@ -46,11 +46,12 @@ function App() {
 
   const initializePlayer = async () => {
     try {
-      // Check if user is logged in
+      // Check if user is logged in or guest
       const savedPlayerId = localStorage.getItem('slingmath_player_id');
       const savedEmail = localStorage.getItem('slingmath_email');
+      const savedIsGuest = localStorage.getItem('slingmath_is_guest') === 'true';
 
-      if (!savedPlayerId || !savedEmail) {
+      if (!savedPlayerId) {
         // Show login modal if not logged in
         setLoading(false);
         setShowLoginModal(true);
@@ -58,6 +59,7 @@ function App() {
       }
 
       setPlayerId(savedPlayerId);
+      setIsGuest(savedIsGuest);
 
       // Get player data
       const response = await axios.get(`${API}/player/${savedPlayerId}`);
@@ -68,9 +70,45 @@ function App() {
       // If error, show login modal
       localStorage.removeItem('slingmath_player_id');
       localStorage.removeItem('slingmath_email');
+      localStorage.removeItem('slingmath_is_guest');
       setLoading(false);
       setShowLoginModal(true);
     }
+  };
+
+  const handlePlayAsGuest = async () => {
+    try {
+      // Create guest player
+      const guestId = `guest_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      const response = await axios.post(`${API}/player`, { 
+        playerId: guestId
+      });
+      
+      // Save as guest
+      localStorage.setItem('slingmath_player_id', guestId);
+      localStorage.setItem('slingmath_is_guest', 'true');
+      
+      setPlayerId(guestId);
+      setPlayerData(response.data);
+      setIsGuest(true);
+      setShowLoginModal(false);
+      toast.info('Jogando como visitante. Seu progresso será temporário! 🎮');
+    } catch (error) {
+      console.error('Error creating guest:', error);
+      toast.error('Erro ao criar sessão de visitante');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('slingmath_player_id');
+    localStorage.removeItem('slingmath_email');
+    localStorage.removeItem('slingmath_is_guest');
+    setPlayerId(null);
+    setPlayerData(null);
+    setIsGuest(false);
+    setShowLoginModal(true);
+    toast.success('Logout realizado com sucesso!');
   };
 
   const checkEmail = async () => {
