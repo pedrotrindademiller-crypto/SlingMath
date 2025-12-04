@@ -1,8 +1,14 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import axios from 'axios';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 import SkinIcon from './SkinIcon';
 import './Inventory.css';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const SKINS = [
   { id: 0, name: 'Clássico', color: '#8B4513' },
@@ -12,12 +18,28 @@ const SKINS = [
   { id: 4, name: 'Arco-íris', gradient: 'linear-gradient(135deg, #FF6B6B, #4ECDC4, #45B7D1, #FFA07A)' }
 ];
 
-const Inventory = ({ playerData }) => {
+const Inventory = ({ playerData, playerId, onUpdate }) => {
   const unlockedSkins = playerData?.unlockedSkins || [0];
   const selectedSkin = playerData?.selectedSkin || 0;
 
   const unlockedSkinsData = SKINS.filter(skin => unlockedSkins.includes(skin.id));
   const lockedSkinsCount = SKINS.length - unlockedSkinsData.length;
+
+  const handleEquipSkin = async (skinId) => {
+    if (skinId === selectedSkin) {
+      toast.info('Esta skin já está equipada!');
+      return;
+    }
+
+    try {
+      await axios.post(`${API}/select-skin/${playerId}/${skinId}`);
+      toast.success(`Skin ${SKINS[skinId].name} equipada! 🎨`);
+      await onUpdate();
+    } catch (error) {
+      console.error('Error equipping skin:', error);
+      toast.error('Erro ao equipar skin');
+    }
+  };
 
   return (
     <div className="inventory-container">
