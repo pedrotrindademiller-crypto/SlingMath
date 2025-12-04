@@ -142,6 +142,14 @@ async def create_or_get_player(input: PlayerCreate):
     existing = await db.players.find_one({"playerId": input.playerId}, {"_id": 0})
     
     if existing:
+        # Update email if provided and different
+        if input.email and existing.get('email') != input.email:
+            await db.players.update_one(
+                {"playerId": input.playerId},
+                {"$set": {"email": input.email, "updatedAt": datetime.now(timezone.utc).isoformat()}}
+            )
+            existing['email'] = input.email
+            
         # Convert ISO strings back to datetime
         if isinstance(existing.get('createdAt'), str):
             existing['createdAt'] = datetime.fromisoformat(existing['createdAt'])
@@ -150,7 +158,7 @@ async def create_or_get_player(input: PlayerCreate):
         return Player(**existing)
     
     # Create new player
-    player = Player(playerId=input.playerId)
+    player = Player(playerId=input.playerId, email=input.email)
     doc = player.model_dump()
     doc['createdAt'] = doc['createdAt'].isoformat()
     doc['updatedAt'] = doc['updatedAt'].isoformat()
