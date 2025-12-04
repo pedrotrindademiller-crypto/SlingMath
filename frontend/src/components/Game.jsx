@@ -478,11 +478,12 @@ const Game = ({ playerData, playerId, onUpdate }) => {
         return false;
       });
 
-      // Draw slingshot (Y shape) com cores personalizadas
-      const slingshot = slingshotRef.current;
-      const colors = skinConfig?.slingshotColors || { base: '#654321', arms: '#654321', band: '#333333' };
-      
-      ctx.save();
+      // Draw slingshot (Y shape) com cores personalizadas - somente se o jogo estiver ativo
+      if (gameActive) {
+        const slingshot = slingshotRef.current;
+        const colors = skinConfig?.slingshotColors || { base: '#654321', arms: '#654321', band: '#333333' };
+        
+        ctx.save();
       
       // Handle (base do Y)
       ctx.strokeStyle = colors.base;
