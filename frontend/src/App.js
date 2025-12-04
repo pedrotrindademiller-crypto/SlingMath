@@ -68,6 +68,29 @@ function App() {
     }
   };
 
+  const handleAdminAddCoins = async () => {
+    // Código secreto: SLINGMATH2025
+    if (adminCode !== 'SLINGMATH2025') {
+      toast.error('Código de administrador inválido!');
+      return;
+    }
+
+    try {
+      const response = await axios.put(`${API}/player/${playerId}`, {
+        coins: (playerData?.coins || 0) + coinsToAdd
+      });
+      
+      setPlayerData(response.data);
+      toast.success(`✅ ${coinsToAdd} moedas adicionadas! Total: ${response.data.coins} 🪙`);
+      setShowAdminPanel(false);
+      setAdminCode('');
+      setCoinsToAdd(100);
+    } catch (error) {
+      console.error('Error adding coins:', error);
+      toast.error('Erro ao adicionar moedas');
+    }
+  };
+
   if (loading) {
     return (
       <div className="loading-screen">
