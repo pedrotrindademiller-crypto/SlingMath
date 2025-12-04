@@ -822,6 +822,15 @@ const Game = ({ playerData, playerId, onUpdate }) => {
           grad.addColorStop(0.5, '#E0E0E0');
           grad.addColorStop(1, '#C0C0C0');
           ctx.fillStyle = grad;
+        } else if (projSkinConfig?.effect === 'hacker') {
+          // Projétil verde Matrix com brilho
+          const grad = ctx.createRadialGradient(slingshot.pullX, slingshot.pullY, 0, slingshot.pullX, slingshot.pullY, 10);
+          grad.addColorStop(0, '#00FF41');
+          grad.addColorStop(0.5, '#00FF00');
+          grad.addColorStop(1, '#00AA00');
+          ctx.fillStyle = grad;
+          ctx.shadowBlur = 15;
+          ctx.shadowColor = '#00FF00';
         } else {
           ctx.fillStyle = projSkinConfig.color || '#8B4513';
         }
