@@ -249,13 +249,41 @@ async def purchase_skin(purchase: PurchaseRequest):
     
     # Skin prices
     skin_prices = {
-        0: 0,     # Clássico (free)
-        1: 50,    # Fogo
-        2: 50,    # Gelo
-        3: 50,    # Ouro
-        4: 50,    # Arco-íris
-        5: 75,    # Espelho
-        6: 10000  # Hacker (Admin)
+        0: 0,      # Clássico (free)
+        1: 50,     # Fogo
+        2: 50,     # Gelo
+        3: 50,     # Ouro
+        4: 50,     # Arco-íris
+        5: 75,     # Espelho
+        6: 10000,  # Hacker (Admin)
+        7: 60,     # Pedra + Musgo
+        8: 75,     # Raio
+        9: 85,     # Mecânico
+        10: 85,    # Tesla
+        11: 100,   # Neon Cyberpunk
+        12: 100,   # Holográfico
+        13: 85,    # Dragão
+        14: 75,    # Elfico
+        15: 85,    # Sombras
+        16: 100,   # Cristal Arcano
+        17: 50,    # Picolé
+        18: 50,    # Banana
+        19: 60,    # Canetinha
+        20: 60,    # Inflável
+        21: 75,    # Tubos de Ensaio
+        22: 85,    # Impressão 3D
+        23: 100,   # Bioluminescente
+        24: 100,   # Atômico
+        25: 100,   # Ouro Maciço
+        26: 85,    # Fibra de Carbono
+        27: 85,    # Titânio
+        28: 75,    # Madeira Petrificada
+        29: 60,    # Ossos
+        30: 60,    # Abóbora
+        31: 60,    # Bengala Doce
+        32: 75,    # Neve e Luzes
+        33: 100,   # Futurista
+        34: 75     # Pirata
     }
     
     skin_price = skin_prices.get(purchase.skinId, 50)
