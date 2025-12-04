@@ -390,9 +390,11 @@ function App() {
                       setEmail(e.target.value);
                       setLoginError('');
                     }}
+                    onBlur={checkEmail}
                     placeholder="seu@email.com"
                     className="login-input"
                     autoFocus
+                    disabled={needsPasswordSetup}
                   />
                 </div>
 
@@ -421,7 +423,12 @@ function App() {
                   className="login-button"
                   disabled={!email || !password}
                 >
-                  {isSignup ? 'Criar Conta' : 'Entrar'}
+                  {needsPasswordSetup 
+                    ? 'Definir Senha e Continuar'
+                    : isSignup 
+                      ? 'Criar Conta' 
+                      : 'Entrar'
+                  }
                 </Button>
 
                 <p className="login-privacy">
