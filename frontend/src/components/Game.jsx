@@ -768,7 +768,7 @@ const Game = ({ playerData, playerId, onUpdate }) => {
         const proj = projectileRef.current;
         const newX = proj.x + proj.velocityX;
         const newY = proj.y + proj.velocityY;
-        const newVelocityY = proj.velocityY + 0.3; // Gravity
+        const newVelocityY = proj.velocityY + 0.1; // Gravity
 
         // Check collision with targets
         let hit = false;
